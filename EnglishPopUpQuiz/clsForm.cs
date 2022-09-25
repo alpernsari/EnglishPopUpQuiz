@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Win32;
 using System.Windows.Forms;
 
 namespace EnglishPopUpQuiz
 {
     public class clsForm
     {
+        //Global Değişken tanımlamaları
+
         private Form1 _form1;
         private List<string> Turkish;
         private List<string> English;
@@ -20,11 +20,16 @@ namespace EnglishPopUpQuiz
         private int _iQuestionIndex;
         private int[] _iMinAndMaxTime;
         public clsForm(Form1 Form1)
-        {
+        {   //Uygulamanın windows başlatıldığı anda başlamasını sağlayan script
+            RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\CurrentVersion\\Run", true);
+            reg.SetValue("English PopUp", Application.ExecutablePath.ToString());
+            
+            // PopUp'ın köşelerini yumuşatma
             int screenwidth = Screen.PrimaryScreen.Bounds.Size.Width;
             int formwidth = Form1.Width;
             Form1.Location = new Point(screenwidth - formwidth, 0);
 
+            //çeşitli classları türetme
             _FileProcces = new clsFileProcesses();
             js = new JumpScare();
             _rand = new Random();
@@ -32,19 +37,26 @@ namespace EnglishPopUpQuiz
             English = new List<string>();
             _iMinAndMaxTime = new int[2];
 
+            /*form uygulamamızı türetme ve PopUp'ın ekranda rastgele belirmesi için minimum ve 
+                maksimum değer*/
             _form1 = Form1;
-            _iMinAndMaxTime[0] = 5000;//300000 -> 5 dakika
-            _iMinAndMaxTime[1] = 20000;//600000 -> 10 dakika
+            _iMinAndMaxTime[0] = 300000;//300000 -> 5 dakika
+            _iMinAndMaxTime[1] = 600000;//600000 -> 10 dakika
             _form1.Hide();
 
+            //FileProcces classından gelen metinden okunmuş kelimeler dizisi
             string[] _lWords = _FileProcces.lWords;
             FormatTheArray(_lWords);
 
+            //Timer objesinin ayarları
             _form1.tmrTimer.Interval = 1;
             _form1.tmrTimer.Enabled = true;
 
+            //Formun olayları
 
+            //timer tick olayı
             _form1.tmrTimer.Tick += TmrTimer_Tick;
+            //buttonların olayları
             _form1.btnAnswer1.Click += BtnAnswer1_Click;
             _form1.btnAnswer2.Click += BtnAnswer2_Click;
             _form1.btnAnswer3.Click += BtnAnswer3_Click;
@@ -93,6 +105,7 @@ namespace EnglishPopUpQuiz
             _form1.tmrTimer.Interval = _rand.Next(_iMinAndMaxTime[0], _iMinAndMaxTime[1]);
         }
     
+        //FileProcces classından gelen diziyi kullanılabilir iki liste haline getirir
         private void FormatTheArray(string[] words)
         {
             foreach (var item in words)
@@ -105,6 +118,7 @@ namespace EnglishPopUpQuiz
 
         }
     
+        //ingilizce ve türkçe kelimelerin bulunduğu metin dosyasından rastgele bir index seçmeye yarar
         private int CreateRandomNumber()
         {
             
@@ -113,6 +127,7 @@ namespace EnglishPopUpQuiz
             return iQuestionIndex;
         }
 
+        //Soruyla ilgili detayları hazırlar
         public void ShowQuestion()
         {
             _iQuestionIndex = CreateRandomNumber();

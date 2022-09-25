@@ -11,6 +11,7 @@ namespace EnglishPopUpQuiz
     public class clsJumpScare
     {
         private JumpScare _jumpscare;
+        CoreAudioDevice defaultPlaybackDevice;
         public clsJumpScare(JumpScare _jumpscare)
         {
             this._jumpscare = _jumpscare;
@@ -19,8 +20,8 @@ namespace EnglishPopUpQuiz
             string sFilePath = "Korkunc.jpg";
             SoundPlayer sp = new SoundPlayer("korkunc.wav");
 
-            CoreAudioDevice defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
-            defaultPlaybackDevice.Volume = 10;
+            defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
+            defaultPlaybackDevice.Volume = 50;
 
             this._jumpscare.tmrJumpScare.Enabled = true;
             this._jumpscare.pictureBox1.ImageLocation = sFilePath;
@@ -32,6 +33,7 @@ namespace EnglishPopUpQuiz
         private void TmrJumpScare_Tick(object sender, EventArgs e)
         {
             _jumpscare.Hide();
+            defaultPlaybackDevice.Volume = 10;
             _jumpscare.tmrJumpScare.Enabled = false;
         }
     }
