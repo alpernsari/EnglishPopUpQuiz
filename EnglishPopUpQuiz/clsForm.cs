@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,45 +8,89 @@ using System.Windows.Forms;
 
 namespace EnglishPopUpQuiz
 {
-    public class clsSettings
+    public class clsForm
     {
         private Form1 _form1;
         private List<string> Turkish;
         private List<string> English;
         private clsFileProcesses _FileProcces;
-        private Random rand;
-        public clsSettings(Form1 Form1)
+        private JumpScare js;
+        private clsJumpScare _jumpscare;
+        private Random _rand;
+        private int _iQuestionIndex;
+        private int[] _iMinAndMaxTime;
+        public clsForm(Form1 Form1)
         {
+            int screenwidth = Screen.PrimaryScreen.Bounds.Size.Width;
+            int formwidth = Form1.Width;
+            Form1.Location = new Point(screenwidth - formwidth, 0);
+
             _FileProcces = new clsFileProcesses();
-            rand = new Random();
+            js = new JumpScare();
+            _rand = new Random();
             Turkish = new List<string>();
             English = new List<string>();
+            _iMinAndMaxTime = new int[2];
+
             _form1 = Form1;
-            //_form1.Hide();
+            _iMinAndMaxTime[0] = 5000;//300000 -> 5 dakika
+            _iMinAndMaxTime[1] = 20000;//600000 -> 10 dakika
+            _form1.Hide();
 
             string[] _lWords = _FileProcces.lWords;
             FormatTheArray(_lWords);
 
-            foreach (var item in English)
-            {
-                _form1.listView1.Items.Add(item);
-            }
-
-            foreach (var item in Turkish)
-            {
-                _form1.listView1.Items.Add(item);
-            }
-
-            _form1.tmrTimer.Interval = 3000;
+            _form1.tmrTimer.Interval = 1;
             _form1.tmrTimer.Enabled = true;
+
+
             _form1.tmrTimer.Tick += TmrTimer_Tick;
+            _form1.btnAnswer1.Click += BtnAnswer1_Click;
+            _form1.btnAnswer2.Click += BtnAnswer2_Click;
+            _form1.btnAnswer3.Click += BtnAnswer3_Click;
+            _form1.btnAnswer4.Click += BtnAnswer4_Click;
+        }
+
+        private void BtnAnswer4_Click(object sender, EventArgs e)
+        {
+
+            if (_form1.btnAnswer4.Text == Turkish[_iQuestionIndex])
+                _form1.Hide();
+            else
+                _jumpscare = new clsJumpScare(js);
+        }
+
+        private void BtnAnswer3_Click(object sender, EventArgs e)
+        {
+
+            if (_form1.btnAnswer3.Text == Turkish[_iQuestionIndex])
+                _form1.Hide();
+            else
+                _jumpscare = new clsJumpScare(js);
+        }
+
+        private void BtnAnswer2_Click(object sender, EventArgs e)
+        {
+
+            if (_form1.btnAnswer2.Text == Turkish[_iQuestionIndex])
+                _form1.Hide();
+            else
+                _jumpscare = new clsJumpScare(js);
+        }
+
+        private void BtnAnswer1_Click(object sender, EventArgs e)
+        {
+            if (_form1.btnAnswer1.Text == Turkish[_iQuestionIndex])
+                _form1.Hide();
+            else
+                _jumpscare = new clsJumpScare(js);
         }
 
         private void TmrTimer_Tick(object sender, EventArgs e)
         {
-            //_form1.Show();
             ShowQuestion();
-            _form1.tmrTimer.Interval = rand.Next(1000, 10000);
+            _form1.Show();
+            _form1.tmrTimer.Interval = _rand.Next(_iMinAndMaxTime[0], _iMinAndMaxTime[1]);
         }
     
         private void FormatTheArray(string[] words)
@@ -63,26 +108,26 @@ namespace EnglishPopUpQuiz
         private int CreateRandomNumber()
         {
             
-            int iQuestionIndex = rand.Next(_FileProcces.iRowCount);
+            int iQuestionIndex = _rand.Next(_FileProcces.iRowCount);
             //MessageBox.Show(iQuestionNumber.ToString);
             return iQuestionIndex;
         }
 
         public void ShowQuestion()
         {
-            int iQuestionIndex = CreateRandomNumber();
+            _iQuestionIndex = CreateRandomNumber();
             int[] QuestionIndexes = new int[3];
             for (int i = 0; i <= 2 ; i++) { QuestionIndexes[i] = CreateRandomNumber(); }
             
-            _form1.lblQuestion.Text = English[iQuestionIndex];
+            _form1.lblQuestion.Text = English[_iQuestionIndex];
 
             
-            int iRandomNumberForAnswersPlace = rand.Next(1,5);
+            int iRandomNumberForAnswersPlace = _rand.Next(1,5);
 
             switch (iRandomNumberForAnswersPlace)
             {
                 case 1:
-                    _form1.btnAnswer1.Text = Turkish[iQuestionIndex];
+                    _form1.btnAnswer1.Text = Turkish[_iQuestionIndex];
                     _form1.btnAnswer2.Text = Turkish[QuestionIndexes[0]];
                     _form1.btnAnswer3.Text = Turkish[QuestionIndexes[1]];
                     _form1.btnAnswer4.Text = Turkish[QuestionIndexes[2]];
@@ -90,7 +135,7 @@ namespace EnglishPopUpQuiz
 
                 case 2:
                     _form1.btnAnswer1.Text = Turkish[QuestionIndexes[0]];
-                    _form1.btnAnswer2.Text = Turkish[iQuestionIndex];
+                    _form1.btnAnswer2.Text = Turkish[_iQuestionIndex];
                     _form1.btnAnswer3.Text = Turkish[QuestionIndexes[1]];
                     _form1.btnAnswer4.Text = Turkish[QuestionIndexes[2]];
                     break;
@@ -98,7 +143,7 @@ namespace EnglishPopUpQuiz
                 case 3:
                     _form1.btnAnswer1.Text = Turkish[QuestionIndexes[0]];
                     _form1.btnAnswer2.Text = Turkish[QuestionIndexes[1]];
-                    _form1.btnAnswer3.Text = Turkish[iQuestionIndex];
+                    _form1.btnAnswer3.Text = Turkish[_iQuestionIndex];
                     _form1.btnAnswer4.Text = Turkish[QuestionIndexes[2]];
                     break;
 
@@ -106,7 +151,7 @@ namespace EnglishPopUpQuiz
                     _form1.btnAnswer1.Text = Turkish[QuestionIndexes[0]];
                     _form1.btnAnswer2.Text = Turkish[QuestionIndexes[1]];
                     _form1.btnAnswer3.Text = Turkish[QuestionIndexes[2]];
-                    _form1.btnAnswer4.Text = Turkish[iQuestionIndex];
+                    _form1.btnAnswer4.Text = Turkish[_iQuestionIndex];
                     break;
 
                 default:
