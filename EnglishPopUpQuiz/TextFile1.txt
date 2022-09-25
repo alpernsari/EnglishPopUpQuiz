@@ -1,0 +1,7 @@
+﻿1 -> Words.txt Okunaca
+2 -> okunan değer bir diziye atılacak
+3 -> dizi ',' e göre split edilecek
+3 -> split edilen veriler türkçe ve ingilizce olarak 2 dizide tutulacak
+4 -> belirli aralıkta bir rastgele süre için pop up çıkması ayarlanaca
+5 -> diziler içerisinde rastgele bir kelime ve 4 farklı cevap seçilecek
+6 -> eğer kullanıcı doğru cevabı verirse pop up kapanacak. yanlış cevabı verirse jumpscare lol

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace EnglishPopUpQuiz
 {
@@ -19,8 +20,7 @@ namespace EnglishPopUpQuiz
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("üğhğ");
-            MessageBox.Show("zıbab ıvj");
+            clsSettings _settings = new clsSettings(this);
         }
     }
 }
