@@ -17,15 +17,14 @@ namespace EnglishPopUpQuiz
         {
             _iRowCount= File.ReadAllLines(_sFilePath).Length; 
             using(StreamReader sr = new StreamReader(_sFilePath))
-            { 
+            {
                 _lWords = new string[iRowCount];
-            
+
                 for (int i = 0; i < iRowCount; i++)
                 {
                     _lWords[i] = sr.ReadLine();
                 }
             }
-
             
         }
 

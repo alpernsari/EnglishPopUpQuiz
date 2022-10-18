@@ -21,9 +21,9 @@ namespace EnglishPopUpQuiz
         private int[] _iMinAndMaxTime;
         public clsForm(Form1 Form1)
         {   //Uygulamanın windows başlatıldığı anda başlamasını sağlayan script
-            RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\CurrentVersion\\Run", true);
-            reg.SetValue("English PopUp", Application.ExecutablePath.ToString());
-            
+            /*RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            reg.SetValue("English PopUp", Application.ExecutablePath.ToString());*/
+
             // PopUp'ın köşelerini yumuşatma
             int screenwidth = Screen.PrimaryScreen.Bounds.Size.Width;
             int formwidth = Form1.Width;

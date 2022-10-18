@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using AudioSwitcher.AudioApi.CoreAudio;
 
 namespace EnglishPopUpQuiz
@@ -12,22 +8,26 @@ namespace EnglishPopUpQuiz
     {
         private JumpScare _jumpscare;
         CoreAudioDevice defaultPlaybackDevice;
+        
         public clsJumpScare(JumpScare _jumpscare)
         {
             this._jumpscare = _jumpscare;
-            this._jumpscare.Show();
+            
 
             string sFilePath = "Korkunc.jpg";
             SoundPlayer sp = new SoundPlayer("korkunc.wav");
 
             defaultPlaybackDevice = new CoreAudioController().DefaultPlaybackDevice;
-            defaultPlaybackDevice.Volume = 50;
+            defaultPlaybackDevice.Mute(false);
+            defaultPlaybackDevice.Volume = 15;
 
             this._jumpscare.tmrJumpScare.Enabled = true;
-            this._jumpscare.pictureBox1.ImageLocation = sFilePath;
+            _jumpscare.pictureBox1.WaitOnLoad = false;
+            this._jumpscare.pictureBox1.LoadAsync(sFilePath);
             sp.Play();
 
             _jumpscare.tmrJumpScare.Tick += TmrJumpScare_Tick;
+            this._jumpscare.Show();
         }
 
         private void TmrJumpScare_Tick(object sender, EventArgs e)
