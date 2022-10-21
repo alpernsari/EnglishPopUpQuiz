@@ -10,16 +10,19 @@ namespace EnglishPopUpQuiz
     {
         //Global Değişken tanımlamaları
 
-        private Form1 _form1;
+        private AnaSayfa _form1;
         private List<string> Turkish;
         private List<string> English;
         private clsFileProcesses _FileProcces;
         private JumpScare js;
         private clsJumpScare _jumpscare;
         private Random _rand;
+        private AddWord aw;
         private int _iQuestionIndex;
         private int[] _iMinAndMaxTime;
-        public clsForm(Form1 Form1)
+
+
+        public clsForm(AnaSayfa Form1)
         {   //Uygulamanın windows başlatıldığı anda başlamasını sağlayan script
             /*RegistryKey reg = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
             reg.SetValue("English PopUp", Application.ExecutablePath.ToString());*/
@@ -31,6 +34,7 @@ namespace EnglishPopUpQuiz
 
             //çeşitli classları türetme
             _FileProcces = new clsFileProcesses();
+            _FileProcces.ReadFile();
             js = new JumpScare();
             _rand = new Random();
             Turkish = new List<string>();
@@ -40,6 +44,7 @@ namespace EnglishPopUpQuiz
             /*form uygulamamızı türetme ve PopUp'ın ekranda rastgele belirmesi için minimum ve 
                 maksimum değer*/
             _form1 = Form1;
+            aw = new AddWord();
             _iMinAndMaxTime[0] = 300000;//300000 -> 5 dakika
             _iMinAndMaxTime[1] = 600000;//600000 -> 10 dakika
             _form1.Hide();
@@ -57,10 +62,16 @@ namespace EnglishPopUpQuiz
             //timer tick olayı
             _form1.tmrTimer.Tick += TmrTimer_Tick;
             //buttonların olayları
+            _form1.btnAddWord.Click += BtnAddWord_Click;
             _form1.btnAnswer1.Click += BtnAnswer1_Click;
             _form1.btnAnswer2.Click += BtnAnswer2_Click;
             _form1.btnAnswer3.Click += BtnAnswer3_Click;
             _form1.btnAnswer4.Click += BtnAnswer4_Click;
+        }
+
+        private void BtnAddWord_Click(object sender, EventArgs e)
+        {
+            aw.Show();
         }
 
         private void BtnAnswer4_Click(object sender, EventArgs e)

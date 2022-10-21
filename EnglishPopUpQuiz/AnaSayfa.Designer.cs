@@ -1,7 +1,7 @@
 ﻿
 namespace EnglishPopUpQuiz
 {
-    partial class Form1
+    partial class AnaSayfa
     {
         /// <summary>
         /// Required designer variable.
@@ -36,6 +36,7 @@ namespace EnglishPopUpQuiz
             this.btnAnswer3 = new System.Windows.Forms.Button();
             this.btnAnswer4 = new System.Windows.Forms.Button();
             this.tmrTimer = new System.Windows.Forms.Timer(this.components);
+            this.btnAddWord = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblQuestion
@@ -87,12 +88,23 @@ namespace EnglishPopUpQuiz
             // 
             this.tmrTimer.Interval = 1000;
             // 
-            // Form1
+            // btnAddWord
+            // 
+            this.btnAddWord.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnAddWord.Location = new System.Drawing.Point(448, 3);
+            this.btnAddWord.Name = "btnAddWord";
+            this.btnAddWord.Size = new System.Drawing.Size(33, 35);
+            this.btnAddWord.TabIndex = 5;
+            this.btnAddWord.Text = "+";
+            this.btnAddWord.UseVisualStyleBackColor = true;
+            // 
+            // AnaSayfa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(493, 117);
             this.ControlBox = false;
+            this.Controls.Add(this.btnAddWord);
             this.Controls.Add(this.btnAnswer4);
             this.Controls.Add(this.btnAnswer3);
             this.Controls.Add(this.btnAnswer2);
@@ -101,7 +113,7 @@ namespace EnglishPopUpQuiz
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Form1";
+            this.Name = "AnaSayfa";
             this.ShowInTaskbar = false;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -117,6 +129,7 @@ namespace EnglishPopUpQuiz
         public System.Windows.Forms.Button btnAnswer2;
         public System.Windows.Forms.Button btnAnswer3;
         public System.Windows.Forms.Button btnAnswer4;
+        public System.Windows.Forms.Button btnAddWord;
     }
 }
 

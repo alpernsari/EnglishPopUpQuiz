@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 
 namespace EnglishPopUpQuiz
 {
-    public partial class Form1 : Form
+    public partial class AnaSayfa : Form
     {
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn
@@ -24,14 +24,14 @@ namespace EnglishPopUpQuiz
             int nWidthEllipse, // width of ellipse
             int nHeightEllipse // height of ellipse
          );
-        public Form1()
+        public AnaSayfa()
         {
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
+            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
             clsForm _settings = new clsForm(this);
         }
     }

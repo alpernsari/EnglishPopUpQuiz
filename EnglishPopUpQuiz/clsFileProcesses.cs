@@ -15,8 +15,13 @@ namespace EnglishPopUpQuiz
         int _iRowCount;
         public clsFileProcesses()
         {
-            _iRowCount= File.ReadAllLines(_sFilePath).Length; 
-            using(StreamReader sr = new StreamReader(_sFilePath))
+
+        }
+
+        public void ReadFile()
+        {
+            _iRowCount = File.ReadAllLines(_sFilePath).Length;
+            using (StreamReader sr = new StreamReader(_sFilePath))
             {
                 _lWords = new string[iRowCount];
 
@@ -25,7 +30,15 @@ namespace EnglishPopUpQuiz
                     _lWords[i] = sr.ReadLine();
                 }
             }
-            
+        }
+
+        public void WriteFile(string English,string Turkish)
+        {
+            using(StreamWriter sw = new StreamWriter(_sFilePath))
+            {
+                string sText = English + " , " + Turkish;
+                sw.WriteLine(sText);
+            }
         }
 
         public string[] lWords { get { return _lWords; }}
